@@ -17,4 +17,5 @@ export class User {
   //plus
   @Column()
   isAdmin: boolean;
+    orders: any;
 }

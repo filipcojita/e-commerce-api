@@ -4,21 +4,21 @@ import { UserModule } from './user/user.module';
 import { User } from './user/user.entity';
 import { ProductModule } from './product/product.module';
 import { Product } from './product/product.entity';
-import { CartModule } from './cart/cart.module';
-import { Cart } from './cart/cart.entity';
-import { CartItem } from './cart/cart-item.entity';
+import { OrderModule } from './order/order.module';
+import { Order } from './order/order.entity';
+import { OrderItem } from './order/order-item.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'ecommerce.db',
-      entities: [User, Product, Cart, CartItem],
+      database: 'db.sqlite',
+      entities: [User, Product, Order, OrderItem],
       synchronize: true,
     }),
     UserModule,
     ProductModule,
-    CartModule,
+    OrderModule,
   ],
 })
 export class AppModule {}

@@ -2,6 +2,14 @@ import { Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, Column, CreateDat
 import { User } from '../user/user.entity';
 import { OrderItem } from './order-item.entity';
 
+//constants
+export const OrderStatus = {
+  PENDING: 0,
+  SHIPPED: 1,
+  COMPLETED: 2,
+  CANCELLED: 3,
+};
+
 @Entity()
 export class Order {
   @PrimaryGeneratedColumn()
@@ -19,13 +27,6 @@ export class Order {
   @Column()
   total: number;
 
-  @Column()
-  status: OrderStatus = OrderStatus.PENDING;
-}
-
-export enum OrderStatus {
-  PENDING,
-  SHIPPED,
-  COMPLETED,
-  CANCELLED
+  @Column({ default: OrderStatus.PENDING })
+  status: number;
 }

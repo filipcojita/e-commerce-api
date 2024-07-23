@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Order } from './order.entity';
+import { Order, OrderStatus } from './order.entity';
 import { OrderItem } from './order-item.entity';
 import { User } from '../user/user.entity';
 import { Product } from '../product/product.entity';
@@ -28,8 +28,8 @@ export class OrderService {
     }
 
     const orderItems: OrderItem[] = [];
-
     let total = 0;
+
     for (const item of createOrderDto.items) {
       const product = await this.productRepository.findOne({ where: { id: item.productId } });
       if (!product) {
@@ -50,6 +50,7 @@ export class OrderService {
       user,
       items: orderItems,
       total,
+      status: createOrderDto.status ?? OrderStatus.PENDING,
     });
 
     return this.orderRepository.save(order);
@@ -90,6 +91,7 @@ export class OrderService {
 
     order.items = orderItems;
     order.total = total;
+    order.status = updateOrderDto.status ?? order.status;
 
     await this.orderRepository.save(order);
     return this.findOne(id);

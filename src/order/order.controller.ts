@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('orders')
+@ApiBasicAuth()
+@UseGuards(AuthGuard('basic'))
 @Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}

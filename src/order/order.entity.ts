@@ -18,4 +18,14 @@ export class Order {
 
   @Column()
   total: number;
+
+  @Column()
+  status: OrderStatus = OrderStatus.PENDING;
+}
+
+export enum OrderStatus {
+  PENDING,
+  SHIPPED,
+  COMPLETED,
+  CANCELLED
 }
